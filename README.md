@@ -1,8 +1,12 @@
 # react-gdrive-image-viewer
 
-This library that lets you use your google drive as a mini data to view your google drivei images on a custom page.
+This library lets you use your Google Drive as a mini data storage to view your Google Drive images on a custom page.
 
-*NOTE*: Currently, google does not require OAuth 2.0 to inquire about public shared google drive directories.
+## Benefits
+* **Easy to use**: Updating photos displayed on a webpage can be done easily by adding the images in a Google Drive directory.
+* **No authentication required**: Use of the API does not require OAuth authentication. Simply your API.
+* **Secure**: Google API console ensures that all requests using your API key are narrowed to a specific host address.
+* **Flexible**: Styling changes can be applied through a JSON pased as a prop to the object.
 
 ## Setup
 
