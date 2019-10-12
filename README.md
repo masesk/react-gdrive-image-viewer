@@ -34,6 +34,7 @@ This library lets you use your Google Drive as a mini data storage to view your 
 
 ```
 import GDImageViewer from './path/to/lib/GDImageViewer';
+import '/path/to/css/GDImageViewer.css'
 ```
 ### required fields
 ```
