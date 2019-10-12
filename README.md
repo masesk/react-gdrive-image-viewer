@@ -25,8 +25,7 @@ This library lets you use your Google Drive as a mini data storage to view your 
 * Navigate to http://drive.google.com. Find the directory that you want to share. Make sure it only contains images in formats readable by Google Drive and your targeted browser.
 * **NOTE: THIS DIRECTORY WILL BE ACCESSIBLE BY ANYONE WITH A LINK AND ACCESSIBLE TO THE PUBLIC. MAKE SURE YOU DO NOT HAVE ANY SENSITIVE INFORMATION IN THIS DIRECTORY.**
 * Right click on the directory and select **"Get Sharable Link"**. Copy the link and extract the id from it.
-* The id can be extracted as follows 
-**https://drive.google.com/open?id=**ID_GOES_HERE****
+* The id can be extracted as follows **https://drive.google.com/open?id=ID_GOES_HERE**
 * Now that you have your directory ID and Google API Key, we are ready to use this react component.
 
 ## Use Instructions
