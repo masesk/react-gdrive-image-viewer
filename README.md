@@ -63,7 +63,7 @@ import '/path/to/css/GDImageViewer.css'
     // if new window is true, new tab is launched
     // with image url
 
-    onClick {
+    onClick: {
         modal: true,
         newWindow: false
     },
