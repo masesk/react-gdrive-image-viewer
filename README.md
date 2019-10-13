@@ -39,7 +39,7 @@ import '/path/to/css/GDImageViewer.css'
 ### required fields
 ```
 {
-    gkey: "gkey: "{GOOGLE_API_KEY}",
+    gkey: "{GOOGLE_API_KEY}",
     dirId: "{GOOGLE_DRIVE_PUBLIC_DIRECTORY_ID}",
     name: "name1",
     options: [Object]
