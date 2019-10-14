@@ -1,6 +1,4 @@
-import ReactDOM from "react-dom";
 import React, { useEffect, useState } from "react";
-import { secret } from "./secret";
 import "./GDImageViewer.css";
 function GDImageViewer(data) {
   const [imgIds, setImgIds] = useState([]);
@@ -48,9 +46,6 @@ function GDImageViewer(data) {
         setModal(true);
       }
     }
-
-    if (options.attachClass) {
-    }
     if (options.hover) {
       setHover(true);
     }
@@ -73,14 +68,18 @@ function GDImageViewer(data) {
   async function loadData() {
     await fetch(
       GOOGLE_DRIVE_URL_START +
-        data.data.dirId +
-        GOOGLE_DRIVE_URL_END +
-        GOOGLE_API_KEY
+      data.data.dirId +
+      GOOGLE_DRIVE_URL_END +
+      GOOGLE_API_KEY
     )
       .then(response => response.json())
       .then(jsonResp => {
         setImgIds(jsonResp.items);
       });
+  }
+
+  function checkFormat(url) {
+    return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
   }
 
   function ModalView(props) {
@@ -104,7 +103,7 @@ function GDImageViewer(data) {
     modalImg.src = imgId;
     modal.style.display = "block";
     const span = document.getElementsByClassName("close")[0];
-    span.onclick = function() {
+    span.onclick = function () {
       modal.style.display = "none";
     };
   }
@@ -117,32 +116,38 @@ function GDImageViewer(data) {
 
       {imgIds &&
         imgIds.map((item, i) => {
-          const className =
-            classNames[item.title] !== undefined ? classNames[item.title] : "";
-          const id = ids[item.title] !== undefined ? ids[item.title] : "";
-          const exclude = excludes[item.title];
-          return (
-            <a
-              href={!modal && clickable && GOOGLE_DRIVE_IMG_URL + item.id}
-              target={newWindow && "_blank"}
-            >
-              {!exclude && (
-                <img
-                  style={style}
-                  className={
-                    (hover ? " gd-img gd-hover " : " gd-img ") + className
-                  }
-                  onClick={() => {
-                    modal && showModal(GOOGLE_DRIVE_IMG_URL + item.id);
-                  }}
-                  src={GOOGLE_DRIVE_IMG_URL + item.id}
-                  id={id ? id : null}
-                  key={i}
-                  alt={item.title}
-                />
-              )}
-            </a>
-          );
+          console.log(checkFormat(item.title));
+          if (checkFormat(item.title)) {
+            const className =
+              classNames[item.title] !== undefined
+                ? classNames[item.title]
+                : "";
+            const id = ids[item.title] !== undefined ? ids[item.title] : "";
+            const exclude = excludes[item.title];
+            return (
+              <a
+                href={!modal && clickable && GOOGLE_DRIVE_IMG_URL + item.id}
+                target={newWindow && "_blank"}
+              >
+                {!exclude && (
+                  <img
+                    style={style}
+                    className={
+                      (clickable ? " gd-pointer " : null) +
+                      (hover ? " gd-img gd-hover " : " gd-img ") + className
+                    }
+                    onClick={() => {
+                      modal && showModal(GOOGLE_DRIVE_IMG_URL + item.id);
+                    }}
+                    src={GOOGLE_DRIVE_IMG_URL + item.id}
+                    id={id ? id : null}
+                    key={i}
+                    alt={item.title}
+                  />
+                )}
+              </a>
+            );
+          }
         })}
     </div>
   );
