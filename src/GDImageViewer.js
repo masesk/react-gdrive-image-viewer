@@ -14,7 +14,7 @@ function GDImageViewer(data) {
 
   const [modal, setModal] = useState(false);
 
-  const [showName, setShowName] = useState(null);
+  const [showHeader, setShowHeader] = useState(null);
 
   const [classNames, setClassNames] = useState(null);
 
@@ -28,7 +28,7 @@ function GDImageViewer(data) {
   const GOOGLE_DRIVE_URL_END = "%27+in+parents&key=";
   const GOOGLE_DRIVE_IMG_URL = "http://drive.google.com/uc?export=view&id=";
   const options = data.data.options;
-  const name = data.data.name;
+  const header = data.data.header;
   useEffect(() => {
     loadData();
     loadSettings(options);
@@ -50,8 +50,8 @@ function GDImageViewer(data) {
     if (options.hover) {
       setHover(true);
     }
-    if (name) {
-      setShowName(options.showName);
+    if (header) {
+      setShowHeader(true);
     }
 
     if (options.attachClass) {
@@ -106,9 +106,7 @@ function GDImageViewer(data) {
     };
   }
 
-  const renderClickable = (className, id, exclude, item ,i) => {
-    console.log(item
-      )
+  const renderImages = (className, id, exclude, item ,i) => {
     return (
       <>
         {!exclude && (
@@ -116,7 +114,8 @@ function GDImageViewer(data) {
             style={style}
             className={
               (clickable ? " gd-pointer " : "") +
-              (hover ? " gd-img gd-hover " : "") + className
+              (" gd-img ") +
+              (hover ? " gd-pointer gd-hover " : "") + className
             }
             onClick={() => {
               modal && showModal(GOOGLE_DRIVE_IMG_URL + item.id);
@@ -132,25 +131,25 @@ function GDImageViewer(data) {
 
   }
 
-  const renderImages = (className, id, exclude, href, target, item, i) => {
+  const renderMain = (className, id, exclude, href, target, item, i) => {
     if (!R.isEmpty(href)) {
       return (
         <a
           href={href}
           target={target}
         >
-          {renderClickable(className, id, exclude, item, i)}
+          {renderImages(className, id, exclude, item, i)}
         </a>
       )
     }
     return (
-      renderClickable(className, id, exclude, item, i)
+      renderImages(className, id, exclude, item, i)
     )
   }
 
   return (
     <div>
-      <h2>{showName && name}</h2>
+      <h2>{showHeader && header}</h2>
 
       {modal && <ModalView />}
 
@@ -163,7 +162,7 @@ function GDImageViewer(data) {
             const exclude = R.propOr("", title, excludes);
             const href = !modal && clickable ? GOOGLE_DRIVE_IMG_URL + item.id : ""
             const target = newWindow ? "_blank" : ""
-            renderImages(className, id, exclude, href, target, item, i)
+            return(renderMain(className, id, exclude, href, target, item, i))
           }
         })}
     </div>

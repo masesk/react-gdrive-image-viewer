@@ -3,9 +3,16 @@ img{
 }
 .gd-img{
   image-orientation: from-image;
+}
+
+.gd-pointer{
+  image-orientation: from-image;
   cursor: pointer;
 }
 
+#test{
+  width: 50px;
+}
 
  /* Style the Image Used to Trigger the Modal */
  .gd-hover {
