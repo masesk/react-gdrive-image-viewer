@@ -6,7 +6,7 @@ This library lets you use your Google Drive as a mini data storage to view your 
 * **Easy to use**: Updating photos displayed on a webpage can be done easily by adding the images in a Google Drive directory.
 * **No authentication required**: Use of the API does not require OAuth authentication. Simply your API.
 * **Secure**: Google API console ensures that all requests using your API key are narrowed to a specific host address.
-* **Flexible**: Styling changes can be applied through a JSON pased as a prop to the object.
+* **Flexible**: Styling changes can be applied through a JSON passed as a prop to the object.
 
 ## Setup
 
@@ -42,7 +42,7 @@ import '/path/to/css/GDImageViewer.css'
     gkey: "{GOOGLE_API_KEY}",
     dirId: "{GOOGLE_DRIVE_PUBLIC_DIRECTORY_ID}",
     name: "name1",
-    options: [Object]
+    options: [Object] <-- Object Specified further below
 }
 ```
 
@@ -56,7 +56,7 @@ import '/path/to/css/GDImageViewer.css'
     },
 
     // behavior when image is clicked
-    // if on click is empty (no hover or newWindow)
+    // if on click is empty (no modal or newWindow)
     // current tab will show full image
     // if modal true, image opens as overlay
     // on current tab
@@ -68,6 +68,31 @@ import '/path/to/css/GDImageViewer.css'
         newWindow: false
     },
     
+    //Use name of <FILE_NAME>.<EXTENSION> (image.png) to 
+    // specify which images not to render
+
+    exclude: {
+        "1.jpg": true
+    },
+
+
+    //Use name of <FILE_NAME>.<EXTENSION> (image.png) to
+    //attach className attribute to a specific image
+
+    attachClass: {
+        "2.jpg": "test"
+    },
+
+
+    //Use name of <FILE_NAME>.<EXTENSION> (image.png) to
+    //attach id attribute to a specific image
+
+    attachId: {
+        "2.jpg": "test2"
+    },
+
+
+
     // if set true, hover over opacity effect
     // will be set
 
