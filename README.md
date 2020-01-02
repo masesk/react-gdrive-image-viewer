@@ -4,7 +4,7 @@ This library lets you use your Google Drive as a mini data storage to view your 
 
 ## Benefits
 * **Easy to use**: Updating photos displayed on a webpage can be done easily by adding the images in a Google Drive directory.
-* **No authentication required**: Use of the API does not require OAuth authentication. Simply your API.
+* **No authentication required**: Use of the API does not require OAuth authentication. Simply your API key.
 * **Secure**: Google API console ensures that all requests using your API key are narrowed to a specific host address.
 * **Flexible**: Styling changes can be applied through a JSON passed as a prop to the object.
 
