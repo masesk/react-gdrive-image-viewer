@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import * as R from 'ramda'
 import "./GDImageViewer.css";
 function GDImageViewer(data) {
   const [imgIds, setImgIds] = useState([]);
@@ -85,10 +86,9 @@ function GDImageViewer(data) {
   function ModalView(props) {
     return (
       <div>
-        <div id="modal-container" class="modal">
-          <span class="close">&times;</span>
-          <img class="modal-content" id="curr-modal" alt="" />
-
+        <div id="modal-container" className="modal">
+          <span className="close">&times;</span>
+          <img className="modal-content" id="curr-modal" alt="" />
           <div id="caption" />
         </div>
       </div>
@@ -97,8 +97,6 @@ function GDImageViewer(data) {
 
   function showModal(imgId) {
     const modal = document.getElementById("modal-container");
-
-    // Get the image and insert it inside the modal - use its "alt" text as a caption
     const modalImg = document.getElementById("curr-modal");
     modalImg.src = imgId;
     modal.style.display = "block";
@@ -106,6 +104,48 @@ function GDImageViewer(data) {
     span.onclick = function () {
       modal.style.display = "none";
     };
+  }
+
+  const renderClickable = (className, id, exclude, item ,i) => {
+    console.log(item
+      )
+    return (
+      <>
+        {!exclude && (
+          <img
+            style={style}
+            className={
+              (clickable ? " gd-pointer " : "") +
+              (hover ? " gd-img gd-hover " : "") + className
+            }
+            onClick={() => {
+              modal && showModal(GOOGLE_DRIVE_IMG_URL + item.id);
+            }}
+            src={GOOGLE_DRIVE_IMG_URL + item.id}
+            id={id ? id : null}
+            key={i}
+            alt={item.title}
+          />
+        )}
+      </>
+    )
+
+  }
+
+  const renderImages = (className, id, exclude, href, target, item, i) => {
+    if (!R.isEmpty(href)) {
+      return (
+        <a
+          href={href}
+          target={target}
+        >
+          {renderClickable(className, id, exclude, item, i)}
+        </a>
+      )
+    }
+    return (
+      renderClickable(className, id, exclude, item, i)
+    )
   }
 
   return (
@@ -116,37 +156,14 @@ function GDImageViewer(data) {
 
       {imgIds &&
         imgIds.map((item, i) => {
-          console.log(checkFormat(item.title));
+          const title = R.propOr("", "title", item)
           if (checkFormat(item.title)) {
-            const className =
-              classNames[item.title] !== undefined
-                ? classNames[item.title]
-                : "";
-            const id = ids[item.title] !== undefined ? ids[item.title] : "";
-            const exclude = excludes[item.title];
-            return (
-              <a
-                href={!modal && clickable && GOOGLE_DRIVE_IMG_URL + item.id}
-                target={newWindow && "_blank"}
-              >
-                {!exclude && (
-                  <img
-                    style={style}
-                    className={
-                      (clickable ? " gd-pointer " : null) +
-                      (hover ? " gd-img gd-hover " : " gd-img ") + className
-                    }
-                    onClick={() => {
-                      modal && showModal(GOOGLE_DRIVE_IMG_URL + item.id);
-                    }}
-                    src={GOOGLE_DRIVE_IMG_URL + item.id}
-                    id={id ? id : null}
-                    key={i}
-                    alt={item.title}
-                  />
-                )}
-              </a>
-            );
+            const className = R.propOr("", title, classNames)
+            const id = R.propOr("", title, ids)
+            const exclude = R.propOr("", title, excludes);
+            const href = !modal && clickable ? GOOGLE_DRIVE_IMG_URL + item.id : ""
+            const target = newWindow ? "_blank" : ""
+            renderImages(className, id, exclude, href, target, item, i)
           }
         })}
     </div>
