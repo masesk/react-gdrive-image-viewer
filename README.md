@@ -94,7 +94,13 @@ const options = {
     // if set true, hover over opacity effect
     // will be set
 
-    hover: true
+    hover: true,
+
+    //Container div class for each image
+    imageContainerClass: "inline",
+
+    // parent/container of each image container
+    parentContainerClass: "main-content"
 }
 
 ```
