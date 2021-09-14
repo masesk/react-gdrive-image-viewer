@@ -2,6 +2,7 @@
   "name": "react-gdrive-image-viewer",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "ramda": "^0.26.1",
     "react": "^16.14.0",
