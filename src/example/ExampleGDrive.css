@@ -1,0 +1,25 @@
+body{
+    background-color: rgb(126, 126, 126);
+}
+
+.inline{
+    display: inline-block;
+    margin: 5px;
+}
+
+.main-content{
+    text-align: center;
+}
+
+.text{
+    color:rgb(39, 39, 39);
+    text-align: center;
+    display:block
+}
+
+h1{
+    color:rgb(39, 39, 39);
+    text-align: center;
+    display:block;
+    font-family: Arial, Helvetica, sans-serif;
+}

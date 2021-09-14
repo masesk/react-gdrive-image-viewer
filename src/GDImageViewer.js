@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as R from 'ramda'
 import "./GDImageViewer.css";
-function GDImageViewer(data) {
+function GDImageViewer({keys, options}) {
   const [imgIds, setImgIds] = useState([]);
 
   const [style, setStyle] = useState({});
@@ -14,25 +14,36 @@ function GDImageViewer(data) {
 
   const [modal, setModal] = useState(false);
 
-  const [showHeader, setShowHeader] = useState(null);
-
   const [classNames, setClassNames] = useState(null);
 
   const [ids, setIds] = useState(null);
 
   const [excludes, setExcludes] = useState(null);
 
-  const GOOGLE_API_KEY = data.data.gkey;
+  const GOOGLE_API_KEY = keys.gkey;
   const GOOGLE_DRIVE_URL_START =
     "https://www.googleapis.com/drive/v2/files?q=%27";
   const GOOGLE_DRIVE_URL_END = "%27+in+parents&key=";
   const GOOGLE_DRIVE_IMG_URL = "http://drive.google.com/uc?export=view&id=";
-  const options = data.data.options;
-  const header = data.data.header;
   useEffect(() => {
-    loadData();
+    async function loadData() {
+      await fetch(
+        GOOGLE_DRIVE_URL_START +
+        keys.dirId +
+        GOOGLE_DRIVE_URL_END +
+        GOOGLE_API_KEY
+      )
+        .then(response => response.json())
+        .then(jsonResp => {
+          setImgIds(jsonResp.items);
+        }).catch((error) => {
+          console.log(error)
+        });
+    }
+    loadData()
     loadSettings(options);
-  }, []);
+    
+  }, [options, keys, GOOGLE_API_KEY]);
 
   function loadSettings(options) {
     if (options.style) {
@@ -50,9 +61,7 @@ function GDImageViewer(data) {
     if (options.hover) {
       setHover(true);
     }
-    if (header) {
-      setShowHeader(true);
-    }
+
 
     if (options.attachClass) {
       setClassNames(options.attachClass);
@@ -66,18 +75,7 @@ function GDImageViewer(data) {
     }
   }
 
-  async function loadData() {
-    await fetch(
-      GOOGLE_DRIVE_URL_START +
-      data.data.dirId +
-      GOOGLE_DRIVE_URL_END +
-      GOOGLE_API_KEY
-    )
-      .then(response => response.json())
-      .then(jsonResp => {
-        setImgIds(jsonResp.items);
-      });
-  }
+ 
 
   function checkFormat(url) {
     return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
@@ -108,7 +106,7 @@ function GDImageViewer(data) {
 
   const renderImages = (className, id, exclude, item ,i) => {
     return (
-      <>
+      <div key={i} className={options.imageContainerClass}>
         {!exclude && (
           <img
             style={style}
@@ -126,7 +124,7 @@ function GDImageViewer(data) {
             alt={item.title}
           />
         )}
-      </>
+      </div>
     )
 
   }
@@ -148,8 +146,7 @@ function GDImageViewer(data) {
   }
 
   return (
-    <div>
-      <h2>{showHeader && header}</h2>
+    <div className={options.parentContainerClass}>
 
       {modal && <ModalView />}
 
@@ -164,6 +161,7 @@ function GDImageViewer(data) {
             const target = newWindow ? "_blank" : ""
             return(renderMain(className, id, exclude, href, target, item, i))
           }
+          return <></>
         })}
     </div>
   );

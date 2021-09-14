@@ -36,19 +36,17 @@ This library lets you use your Google Drive as a mini data storage to view your 
 import GDImageViewer from './path/to/lib/GDImageViewer';
 import '/path/to/css/GDImageViewer.css'
 ```
-### required fields
+### keys
 ```
-{
+const keys = {
     gkey: "{GOOGLE_API_KEY}",
-    dirId: "{GOOGLE_DRIVE_PUBLIC_DIRECTORY_ID}",
-    name: "name1",
-    options: [Object] <-- Object Specified further below
+    dirId: "{GOOGLE_DRIVE_PUBLIC_DIRECTORY_ID}"
 }
 ```
 
 ### options
 ```
-{
+const options = {
     // react style object
     // https://reactjs.org/docs/dom-elements.html#style
 
@@ -103,5 +101,11 @@ import '/path/to/css/GDImageViewer.css'
 
 ### initialize and pass prop
 ```
-<GDImageViewer data={required_fields_object}>
+<GDImageViewer keys={keys} options={options}>
 ```
+
+## Example
+Checkout `src/example/ExampleGDrive.js` for a working implementation.
+
+## Working Example
+Checkout `https://masesk.github.io/react-gdrive-image-viewer` for a working example.
